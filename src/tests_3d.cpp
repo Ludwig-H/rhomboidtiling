@@ -13,6 +13,7 @@
 #include "bifiltration_cell.h"
 #include "combinatorial_bifiltration_cell.h"
 
+#define CATCH_CONFIG_NO_POSIX_SIGNALS
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
 

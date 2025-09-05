@@ -1,9 +1,9 @@
 #pragma once
 
 #include <CGAL/Regular_triangulation_2.h>
+#include <CGAL/Regular_triangulation_vertex_base_2.h>
+#include <CGAL/Regular_triangulation_face_base_2.h>
 #include <CGAL/Triangulation_vertex_base_with_info_2.h>
-// CGAL <4.10
-#include <CGAL/Regular_triangulation_euclidean_traits_2.h>
 
 #include <vector>
 
@@ -20,29 +20,13 @@ class DimensionalTraits_2 {
     typedef typename K::Circle_2                                                     Sphere;
     typedef typename K::FT                                                               FT;
 
-    // CGAL 4.10 breaks some backward compatibility.
-    // This code is for CGAL <4.10, but replacing the typedefs below
-    // should make to code compile for later CGAL versions.
-
-    // If using CGAL <4.10:
-    typedef typename CGAL::Regular_triangulation_euclidean_traits_2<K>               Traits;
-    typedef typename CGAL::Regular_triangulation_vertex_base_2<Traits>                Vbase;
-    typedef typename CGAL::Triangulation_vertex_base_with_info_2<PIndex, Traits,Vbase>   Vb;
-    typedef typename CGAL::Regular_triangulation_face_base_2<Traits>                     Fb;
-    typedef typename CGAL::Triangulation_data_structure_2<Vb,Fb>                        Tds;
-    typedef typename CGAL::Regular_triangulation_2<Traits, Tds>       Regular_triangulation;
-    typedef typename Traits::Weighted_point_2                                Weighted_point;
-    typedef typename Regular_triangulation::Finite_faces_iterator
-                                                Regular_triangulation_finite_cells_iterator;
-
-    // If using CGAL >=4.10:
-    // typedef typename K::FT                                               Weight;
-    // typedef typename K::Weighted_point_2                                 Weighted_point;
-    // typedef typename CGAL::Regular_triangulation_vertex_base_2<K>        Vb0;
-    // typedef typename CGAL::Triangulation_vertex_base_with_info_2<PIndex, K, Vb0> Vb;
-    // typedef typename CGAL::Regular_triangulation_face_base_2<K>          Fb;
-    // typedef typename CGAL::Triangulation_data_structure_2<Vb,Fb>         Tds;
-    // typedef typename CGAL::Regular_triangulation_2<K, Tds>               Reg_Tri;
+    typedef typename K::Weighted_point_2                                 Weighted_point;
+    typedef CGAL::Regular_triangulation_vertex_base_2<K>                 Vb0;
+    typedef CGAL::Triangulation_vertex_base_with_info_2<PIndex, K, Vb0>  Vb;
+    typedef CGAL::Regular_triangulation_face_base_2<K>                   Fb;
+    typedef CGAL::Triangulation_data_structure_2<Vb, Fb>                 Tds;
+    typedef CGAL::Regular_triangulation_2<K, Tds>                        Regular_triangulation;
+    typedef typename Regular_triangulation::Finite_faces_iterator        Regular_triangulation_finite_cells_iterator;
 
     static Regular_triangulation_finite_cells_iterator
     get_finite_cells_begin(const Regular_triangulation& T) {return T.finite_faces_begin();}
