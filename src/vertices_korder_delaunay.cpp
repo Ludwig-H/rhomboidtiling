@@ -1,4 +1,5 @@
 #include <CGAL/Exact_predicates_exact_constructions_kernel.h>
+#include <CGAL/number_utils.h>
 
 #include "dimensional_traits_3.h"
 #include "rhomboid_tiling.h"
@@ -64,13 +65,20 @@ int main(int argc, char** argv) {
         k = points.size();
     }
     RhomboidTiling<Dt3> rt(points, k);
-    auto vertices = rt.get_vertices(k);
-    for (const auto& v : vertices) {
-        for (std::size_t i = 0; i < v.size(); ++i) {
-            if (i) outfile << ' ';
-            outfile << v[i];
+    auto bf = rt.get_delaunay_filtration(k);
+    auto id_map = rt.get_bifiltration_id_map();
+    for (const auto& c : bf) {
+        if (c.d == 0 && c.k == k && c.id < static_cast<int>(id_map.size())) {
+            const auto& cell = id_map[c.id];
+            if (cell.empty()) continue;
+            const auto& vx = cell[0];
+            for (std::size_t i = 0; i < vx.size(); ++i) {
+                if (i) outfile << ' ';
+                outfile << vx[i];
+            }
+            if (!vx.empty()) outfile << ' ';
+            outfile << CGAL::to_double(c.r) << '\n';
         }
-        outfile << '\n';
     }
     return 0;
 }

@@ -119,14 +119,16 @@ brackets.
 ## VerticesKOrderDelaunay
 
 The repository also provides the `VerticesKOrderDelaunay` executable which
-outputs the vertices of a k-order Delaunay mosaic. Usage:
+outputs the vertices of a k-order Delaunay mosaic together with their
+filtration value. Usage:
 
 ```
 VerticesKOrderDelaunay input.xyz k output.txt
 ```
 
 `input.xyz` contains one 3D point per line. `k` is the desired order and
-`output.txt` will contain one vertex per line as a list of point indices.
+`output.txt` will contain one vertex per line as a list of point indices
+followed by the radius of the smallest sphere containing these `k` points.
 
 See `notebooks/compare_vertices.ipynb` for a Colab notebook comparing the
 output of this program to the Python implementation from
