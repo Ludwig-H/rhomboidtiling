@@ -24,9 +24,9 @@ https://github.com/geoo89/orderkdelaunay obsolete.
 
 ## Prerequisites
 
-_Prerequisites:_ cmake, CGAL version <= 4.9, Catch2 (included);
-to work with CGAL version >= 4.10, some typedefs need to be changed,
-see `src/dimensional_traits_2.h` and `src/dimensional_traits_3.h`.
+_Prerequisites:_ cmake, a C++17 compiler, and a recent
+[CGAL](https://www.cgal.org/) release (tested with CGAL 6). Catch2 is
+included with the source.
 
 The build setup builds a commandline tool and tests. To build, run:
 ```
@@ -115,3 +115,19 @@ type is defined in the respective class definition, with the exception of
 CCell, which is a `std::vector` of `std::vector` of `int`s and is output in 
 the list format used in python, i.e. comma separated values wrapped in square
 brackets.
+
+## VerticesKOrderDelaunay
+
+The repository also provides the `VerticesKOrderDelaunay` executable which
+outputs the vertices of a k-order Delaunay mosaic. Usage:
+
+```
+VerticesKOrderDelaunay input.xyz k output.txt
+```
+
+`input.xyz` contains one 3D point per line. `k` is the desired order and
+`output.txt` will contain one vertex per line as a list of point indices.
+
+See `notebooks/compare_vertices.ipynb` for a Colab notebook comparing the
+output of this program to the Python implementation from
+[orderkdelaunay](https://github.com/geoo89/orderkdelaunay).
